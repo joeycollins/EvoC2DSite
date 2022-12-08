@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>EvoC2D</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+            <div class="container px-4">
+                <a class="navbar-brand" href="#page-top">EvoC2D</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#demos">Demos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#methods">Methods</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#next">Next Steps</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div>
+            <img src="assets/evo1.png" class="evo-img"/>
+        </div>
+        <!-- Header-->
+        <header class="bg-gradient text-white">
+            <div class="container px-4 text-center">
+                <h1 class="fw-bolder">EvoC2D</h1>
+                <p class="lead">A simulated environment for evolutionary neural networks.</p>
+                <a class="btn btn-lg btn-light" href="https://github.com/joeycollins/EvoC2D" target="_blank">Goto Source!</a>
+            </div>
+        </header>
+        <!-- Intro section-->
+        <section class="bg-light"id="about">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>About EvoC2D</h2>
+                        <p class="lead"> EvoC2D is a simulation environment written entirely in C using OpenGL. Design creatures with different traits and abilities and watch as they evolve to succeed in their environment. </p>
+                        <p class="lead"> EvoC2D creatures "think" using an evolutionary neural network which will randomly mutate network hidden genes, connections, and weights through reproduction. Creatures with 
+                            unfit networks will fall victim to their environment while those equipped to survive will reproduce. </p>
+                        <p class="lead">That's not all though! Neural network input and output layers can evolve though physical mutation. Your creature's descendants might mutate new rare abilities with enough time.</p>
+                        <p class="lead">Checkout the following demo! </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Demo section-->
+        <section id="demos">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>Demos</h2>
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Methods section-->
+        <section id="methods" class="bg-light">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>Methods brief</h2>
+                        <p class="lead">This section is meant to explain the AI portion of the EvoC2D. The model was inspired by the Neuro-evolution of Augmenting Topologies (NEAT) paper. In implementations I had seen, this evolutionary
+                            neural network algorithm was used in large controlled populations. A number of entities would be created in individual environments and the two fittest would be selected and combined to form the base network for the next 
+                            generation. Neural networks were mutated randomly between generations. In EvoC2D, I wanted to remove as much of this outside control as possible and create a single environment where creatures could interact and 
+                            would form the next generations by reproducing individually throughout time. I believed this would be an interesting expirement and would more closely resemble the evolution of creatures on Earth. 
+                        </p>
+                        <p class="lead"> 
+                            An EvoC2D creature is built from "components". A component is essentially an ability. Thrusters (movement), food sensors, and rotators are examples of some components. There are two
+                            types of component: input and output. An input component reads data from the environment; such as a food sensor. An output component performs an action; such as a thruster. Once a creature has been 
+                            created and all of its components have been selected, we can build our creature's genome. A genome is essentially the blueprint of the creature's neural network. Throughout this explanation we will use 
+                            an example of a simple creature with 2 components a food sensor and a thruster.
+                        </p>
+                        <img src="assets/creat2.png" width="75%"/>
+                        <p class="lead"> Here's our creature with both of its components. As an aside, creatures our built in a hierarchical manner, where components are added relative to a root component, which is the thruster in this case.
+                            As more components are added, the creature becomes more visually complex. More about creature building can be seen in the source code. Coloration of each component is actually very meaningful and references a feature of the artificial intelligence.
+                            I will come back to this later.
+                        </p>
+                        <p class="lead">
+                            With our creature's components assigned, we can create its genome. A genome consists of input genes, hidden genes, output genes, and connections. Input and outputs genes
+                            are created directly from our creatures components. Food sensors take a three-vector containing x direction of nearest food, y direction of nearest food and distance (normalized within max sight range).
+                            Therefore three input genes are created for the food sensor. Thrusters output a two vector, containing displacement x and displacement y. So two output genes are created. As our creature is generation 0,
+                            it has no hidden genes. Hidden genes and connections between genes are created solely through genomic mutation. In the genome diagram below, 5 connections and one hidden gene have been added; the result of 3 mutations.
+                        </p>
+                        <img src="assets/net1.png" width="75%"/>
+                        <p class="lead"> C0 was a connection mutation, the dotted line shows it is disabled. This connection was split, by another mutation creating the hidden gene and connections C2 and C3. C1 is a connection mutation that is still enabled.
+                            Thus three mutations. These mutations follow the NEAT algorithm mutation rules. Connection weights are also mutated.
+                        </p>
+                        <p class="lead"> After mutation occurs, our neural network is created using the genome as a blueprint. Each creatures network is evaluated every frame by passing values from the input components through all hidden layers to the 
+                            output components. So for example, if a thruster component gets the vector [0, 0.4], it will move 0.4 in the y direction.</p>
+                        <p class="lead"> I encourage looking at how the component, genome and networks are connected on an architectural level. I'm pretty proud of architecture I designed to have the data being gathered at the physical level, passing 
+                            through the network and being actualized in the world. I've gotten around 500 pretty complex creatures running at the same time without much lag. 
+                        </p> 
+                        <p class="lead"> There are two types of reproduction for creatures, asexual and sexual. Both of which are components. Asexual reproduction takes creates a copy of the parent creature and genome and mutates it.
+                            Sexual reproduction components find the nearest creature with the most energy, combines both genomes (using NEATs algorithm for genome combination which involves tracking and storing mutation ids globally), and mutates it. Using reproduction, creatures
+                            will usually become fit enough to succeed in the environment, unless the whole population dies off.
+                        </p>
+                        <p class="lead"> 
+                            Since I drew a lot of inspiration from NEAT, I wanted to add something completely novel to the algorithm. Additionally I wanted creatures to be able to evolve new components. So I created "structural innovation", which allows
+                            creatures to mutate new components when they are born. Each structural mutation has an id, that is individual to a component type and position (on the creature), each id has a corresponding color. So components with the same structural mutation 
+                            are the same color even between creatures. What this means is that the input and output layers of the genomes can change through generations. New abilities can be discovered and thus new problems can be solved by the 
+                            these mutated creatures. When a new component is created, it does take some time for genomic mutations to fit that new component into the network. 
+                        </p>
+                        <p class="lead"> There is a lot of work that goes on behind the scenes to track all of these genomic and structural mutations. All of this is so creatures can reproduce and their prodigy will 
+                            have the correct physical and genomic properties. </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+         <!-- Next Steps section-->
+         <section id="next">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>Next Steps</h2>
+                        <p class="lead"> Here are the next things that need to be done for a cooler program. </p>
+                        <ul>
+                            <li>More obstacles in the environment, and components with potential to conquer them. Additionally, more difficulty scaling; the environment should be tougher to survive in 
+                                the longer it has been running to promote natural selection. "Seasons" are an option; perhaps food becomes more scarce</li>
+                            <li>Predator and prey; currently in development but needs alot of work. </li>
+                            <li>Write some nicer shaders.</li>
+                            <li>Better UI, creature creator UI. Need to optimize ui rendering code; currently drawing text dynamically; should store character bitmap data statically in VAO.</li>
+                          </ul>
+                          
+                          
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container px-4"><p class="m-0 text-center text-white">EvoC2D 12/6/2022 | https://github.com/joeycollins/EvoC2D</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
